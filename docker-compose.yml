@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  user:
+    image: mongo:latest
+    container_name: parcel-database
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: Pa55w0rd
+      MONGO_INITDB_DATABASE: parcels
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
