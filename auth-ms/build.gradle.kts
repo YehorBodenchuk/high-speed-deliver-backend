@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.spring.validation)
     implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot)
     implementation(libs.spring.security)

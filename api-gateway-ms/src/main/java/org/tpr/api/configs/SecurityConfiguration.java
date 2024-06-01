@@ -21,10 +21,15 @@ public class SecurityConfiguration {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/parcel/", "/api/parcel/{id}").permitAll()
+                        .pathMatchers(
+                                "/api/parcel/",
+                                "/api/parcel/{id}",
+                                "/api/user/register"
+                        ).permitAll()
                         .anyExchange().authenticated()
                 )
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
 

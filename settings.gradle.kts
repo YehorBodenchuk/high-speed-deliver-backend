@@ -12,6 +12,7 @@ dependencyResolutionManagement {
             version("junit", "5.11.0-M2")
             version("mockito", "5.12.0")
             version("crypto", "6.3.0")
+            library("spring-validation", "org.springframework.boot", "spring-boot-starter-validation").versionRef("spring")
             library("spring-security-crypto", "org.springframework.security", "spring-security-crypto").versionRef("crypto")
             library("spring-security", "org.springframework.boot", "spring-boot-starter-security").versionRef("spring")
             library("test-mockito-core", "org.mockito", "mockito-core").versionRef("mockito")

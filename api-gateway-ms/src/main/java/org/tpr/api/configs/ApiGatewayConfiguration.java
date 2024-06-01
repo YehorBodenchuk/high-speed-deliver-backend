@@ -16,6 +16,11 @@ public class ApiGatewayConfiguration {
                                 .filters(f -> f.addResponseHeader("X-Powered-By", "High Speed Delivery"))
                                 .uri("http://localhost:8081")
                 )
+                .route(
+                        r -> r.path("/api/user/**")
+                                .filters(f -> f.addResponseHeader("X-Powered-By", "High Speed Delivery"))
+                                .uri("http://localhost:8082")
+                )
                 .build();
     }
 }

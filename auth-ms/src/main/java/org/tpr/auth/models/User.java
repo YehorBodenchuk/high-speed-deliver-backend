@@ -1,8 +1,8 @@
 package org.tpr.auth.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,13 +17,18 @@ import java.util.Objects;
 @Document(collection = "users")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User implements UserDetails {
 
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String email;
 
+    @Indexed(unique = true)
     private String phone;
 
     private String password;
