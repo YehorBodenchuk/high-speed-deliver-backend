@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jwt.api)
     implementation(libs.lombok)
     annotationProcessor(libs.lombok)
     implementation(libs.spring.actuator)
