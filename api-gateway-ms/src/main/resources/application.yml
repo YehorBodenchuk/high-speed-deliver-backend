@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway-microservice
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
