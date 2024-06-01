@@ -12,6 +12,11 @@ dependencyResolutionManagement {
             version("junit", "5.11.0-M2")
             version("mockito", "5.12.0")
             version("crypto", "6.3.0")
+            version("jwt", "0.12.5")
+
+            library("jwt.api", "io.jsonwebtoken", "jjwt-api").versionRef("jwt")
+            library("jwt.impl", "io.jsonwebtoken", "jjwt-impl").versionRef("jwt")
+            library("jwt.jackson", "io.jsonwebtoken", "jjwt-jackson").versionRef("jwt")
             library("spring-validation", "org.springframework.boot", "spring-boot-starter-validation").versionRef("spring")
             library("spring-security-crypto", "org.springframework.security", "spring-security-crypto").versionRef("crypto")
             library("spring-security", "org.springframework.boot", "spring-boot-starter-security").versionRef("spring")
@@ -25,6 +30,7 @@ dependencyResolutionManagement {
             library("lombok", "org.projectlombok", "lombok").versionRef("lombok")
             library("spring-cloud", "org.springframework.cloud", "spring-cloud-starter-gateway").versionRef("cloud")
             library("spring-actuator", "org.springframework.boot", "spring-boot-starter-actuator").versionRef("spring")
+
             plugin("spring-boot-plugin", "org.springframework.boot").versionRef("spring")
         }
     }

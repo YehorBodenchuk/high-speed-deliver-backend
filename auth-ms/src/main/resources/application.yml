@@ -1,6 +1,11 @@
 server:
   port: 8082
 
+jwt:
+  secret: "your_very_long_secret_key_that_is_at_least_32_bytes_long"
+  tokenExpire: 60
+  refreshTokenExpire: 7
+
 spring:
   application:
     name: auth-microservice

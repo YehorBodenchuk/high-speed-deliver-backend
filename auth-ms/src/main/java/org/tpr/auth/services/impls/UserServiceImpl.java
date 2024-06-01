@@ -1,25 +1,31 @@
 package org.tpr.auth.services.impls;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.tpr.auth.controllers.dtos.TokenDto;
 import org.tpr.auth.controllers.dtos.UserRegisterDto;
 import org.tpr.auth.models.User;
 import org.tpr.auth.models.enums.UserRole;
 import org.tpr.auth.repositories.UserRepository;
 import org.tpr.auth.services.UserService;
+import org.tpr.auth.utils.JwtUtils;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final JwtUtils jwtUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String register(UserRegisterDto request) {
+    public TokenDto register(UserRegisterDto request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -38,9 +44,13 @@ public class UserServiceImpl implements UserService {
                 .middleName(request.getMiddleName())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
+        user = userRepository.save(user);
 
-        userRepository.save(user);
+        log.info(String.format("New user with email %s was successfully registered.", user.getEmail()));
 
-        return "It's ok!";
+        return TokenDto.builder()
+                .accessToken(jwtUtils.generateToken(user))
+                .refreshToken(jwtUtils.generateRefreshToken(user))
+                .build();
     }
 }

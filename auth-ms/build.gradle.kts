@@ -10,6 +10,9 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jwt.api)
+    runtimeOnly(libs.jwt.impl)
+    runtimeOnly(libs.jwt.jackson)
     implementation(libs.spring.validation)
     implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot)
