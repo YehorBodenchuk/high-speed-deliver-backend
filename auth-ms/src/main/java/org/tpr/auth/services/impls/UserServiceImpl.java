@@ -12,7 +12,8 @@ import org.tpr.auth.models.User;
 import org.tpr.auth.models.enums.UserRole;
 import org.tpr.auth.repositories.UserRepository;
 import org.tpr.auth.services.UserService;
-import org.tpr.auth.utils.JwtTokenFactory;
+import org.tpr.auth.utils.factories.impls.JwtRefreshTokenFactory;
+import org.tpr.auth.utils.factories.impls.JwtTokenFactory;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtTokenFactory jwtTokenFactory;
+
+    private final JwtRefreshTokenFactory jwtRefreshTokenFactory;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,8 +51,14 @@ public class UserServiceImpl implements UserService {
 
         log.info(String.format("New user with email %s was successfully registered.", user.getEmail()));
 
+        String token = jwtTokenFactory.generateToken(user);
+        String refreshToken = jwtRefreshTokenFactory.generateToken(user);
+
         return TokenDto.builder()
-                .accessToken(jwtTokenFactory.generateToken(user))
+                .accessToken(token)
+                .refreshToken(refreshToken)
+                .accessTokenExpire(jwtTokenFactory.extractExpiration(token).getTime())
+                .refreshTokenExpire(jwtRefreshTokenFactory.extractExpiration(refreshToken).getTime())
                 .build();
     }
 }

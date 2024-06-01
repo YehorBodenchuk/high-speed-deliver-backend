@@ -1,4 +1,4 @@
-package org.tpr.auth.utils;
+package org.tpr.auth.utils.factories;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +17,15 @@ public interface TokenFactory {
 
     Boolean validateToken(String token);
 
-    Claims extractAllClaims(String token);
+    SecretKey getSecretKey();
+
+    default Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    };
 
     default String createToken(Map<String, Object> claims, String subject, long expirationTime, SecretKey secret) {
         return Jwts.builder()

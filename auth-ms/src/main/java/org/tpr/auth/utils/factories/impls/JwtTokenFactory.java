@@ -1,11 +1,11 @@
-package org.tpr.auth.utils;
+package org.tpr.auth.utils.factories.impls;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.tpr.auth.models.User;
+import org.tpr.auth.models.enums.TokenType;
+import org.tpr.auth.utils.factories.TokenFactory;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public final class JwtTokenFactory implements TokenFactory {
+public class JwtTokenFactory implements TokenFactory {
 
     @Value("${jwt.secret}")
     private String secret;
@@ -23,8 +23,7 @@ public final class JwtTokenFactory implements TokenFactory {
 
     @Override
     public String generateToken(User user) {
-        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        return createToken(formClaims(user), user.getEmail(), 1000 * 60 * tokenExpire, secretKey);
+        return createToken(formClaims(user), user.getEmail(), 1000 * 60 * tokenExpire, getSecretKey());
     }
 
     @Override
@@ -33,6 +32,7 @@ public final class JwtTokenFactory implements TokenFactory {
         claims.put("firstName", user.getFirstName());
         claims.put("lastName", user.getLastName());
         claims.put("roles", user.getRoles());
+        claims.put("type", TokenType.ACCESS);
         return claims;
     }
 
@@ -42,13 +42,7 @@ public final class JwtTokenFactory implements TokenFactory {
     }
 
     @Override
-    public Claims extractAllClaims(String token) {
-        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+    public SecretKey getSecretKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 }

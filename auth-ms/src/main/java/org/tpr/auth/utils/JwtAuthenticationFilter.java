@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.tpr.auth.services.UserService;
+import org.tpr.auth.utils.factories.impls.JwtTokenFactory;
 
 import java.io.IOException;
 
