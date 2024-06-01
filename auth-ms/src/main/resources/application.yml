@@ -1,2 +1,9 @@
 server:
   port: 8082
+
+spring:
+  application:
+    name: auth-microservice
+  data:
+    mongodb:
+      uri: mongodb://admin:Pa55w0rd@localhost:28018/users?authSource=admin

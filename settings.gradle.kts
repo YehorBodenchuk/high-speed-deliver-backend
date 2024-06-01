@@ -11,6 +11,8 @@ dependencyResolutionManagement {
             version("cloud", "4.1.3")
             version("junit", "5.11.0-M2")
             version("mockito", "5.12.0")
+            version("crypto", "6.3.0")
+            library("spring-security-crypto", "org.springframework.security", "spring-security-crypto").versionRef("crypto")
             library("spring-security", "org.springframework.boot", "spring-boot-starter-security").versionRef("spring")
             library("test-mockito-core", "org.mockito", "mockito-core").versionRef("mockito")
             library("test-junit-engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef("junit")
