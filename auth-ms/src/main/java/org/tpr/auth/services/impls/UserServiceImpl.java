@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tpr.auth.controllers.dtos.TokenDto;
+import org.tpr.auth.controllers.dtos.UserDto;
 import org.tpr.auth.controllers.dtos.UserRegisterDto;
 import org.tpr.auth.models.User;
 import org.tpr.auth.models.enums.UserRole;
@@ -60,5 +61,10 @@ public class UserServiceImpl implements UserService {
                 .accessTokenExpire(jwtTokenFactory.extractExpiration(token).getTime())
                 .refreshTokenExpire(jwtRefreshTokenFactory.extractExpiration(refreshToken).getTime())
                 .build();
+    }
+
+    @Override
+    public UserDto getMe() {
+        return null;
     }
 }
