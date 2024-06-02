@@ -60,12 +60,12 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return Objects.isNull(archiveDate);
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return Objects.isNull(archiveDate);
     }
 
     @Override
@@ -75,6 +75,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return Objects.isNull(archiveDate);
     }
 }
