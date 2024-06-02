@@ -6,9 +6,19 @@ jwt:
   tokenExpire: 60
   refreshTokenExpire: 7
 
+rabbitmq:
+  exchange: rabbit_exchange
+  registrationQueue: registration_queue
+  registrationQueueKey: registration_key
+
 spring:
   application:
     name: auth-microservice
   data:
     mongodb:
       uri: mongodb://admin:Pa55w0rd@localhost:28018/users?authSource=admin
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: Pa55w0rd

@@ -5,9 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +14,7 @@ import org.tpr.auth.controllers.dtos.UserDto;
 import org.tpr.auth.controllers.dtos.UserLoginDto;
 import org.tpr.auth.controllers.dtos.UserRegisterDto;
 import org.tpr.auth.models.User;
+import org.tpr.auth.services.UserFacade;
 import org.tpr.auth.services.UserService;
 
 @RestController
@@ -25,26 +23,20 @@ import org.tpr.auth.services.UserService;
 @Validated
 public class UserController {
 
-    private final UserService userService;
+    private final UserFacade userFacade;
 
     private final UserDtoConverter userDtoConverter;
 
-    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     @PostMapping("/public/register")
     public ResponseEntity<TokenDto> register(@Valid @RequestBody UserRegisterDto request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userFacade.registerAndNotify(request));
     }
 
     @PostMapping("/public/login")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody UserLoginDto request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(), request.getPassword()
-                )
-        );
-
-        return ResponseEntity.ok(userService.login(authentication));
+        return ResponseEntity.ok(userFacade.authenticateAndLogin(request));
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

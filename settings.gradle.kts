@@ -2,6 +2,7 @@ rootProject.name = "tpr-backend"
 include("parcel-ms")
 include("api-gateway-ms")
 include("auth-ms")
+include("notify-ms")
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -14,6 +15,7 @@ dependencyResolutionManagement {
             version("crypto", "6.3.0")
             version("jwt", "0.12.5")
 
+            library("spring.rabbitmq", "org.springframework.boot", "spring-boot-starter-amqp").versionRef("spring")
             library("jwt.api", "io.jsonwebtoken", "jjwt-api").versionRef("jwt")
             library("jwt.impl", "io.jsonwebtoken", "jjwt-impl").versionRef("jwt")
             library("jwt.jackson", "io.jsonwebtoken", "jjwt-jackson").versionRef("jwt")

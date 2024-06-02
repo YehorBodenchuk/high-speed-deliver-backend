@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.spring.boot.plugin)
 }
 
-group = "org.tpr.auth"
+group = "org.tpr.notify"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -11,25 +11,17 @@ repositories {
 }
 
 dependencies {
-    // Spring boot dependencies
+    implementation(libs.jwt.api)
+    runtimeOnly(libs.jwt.impl)
+    runtimeOnly(libs.jwt.jackson)
     implementation(libs.spring.validation)
     implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot)
     implementation(libs.spring.security)
     implementation(libs.spring.actuator)
     implementation(libs.spring.mongodb)
-    implementation(libs.spring.rabbitmq)
-
-    // JWT libs
-    implementation(libs.jwt.api)
-    runtimeOnly(libs.jwt.impl)
-    runtimeOnly(libs.jwt.jackson)
-
-    // Lombok
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
-
-    // Testing
     testImplementation(libs.spring.test)
     testImplementation(libs.test.junit)
     testImplementation(libs.test.junit.api)

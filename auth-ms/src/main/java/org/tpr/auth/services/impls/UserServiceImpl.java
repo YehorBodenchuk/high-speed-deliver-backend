@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final JwtRefreshTokenFactory jwtRefreshTokenFactory;
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //todo: Create own exception to handle
@@ -70,11 +71,11 @@ public class UserServiceImpl implements UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
 
-        log.info(String.format("User with email %s was successfully login.", user.getEmail()));
 
         String token = jwtTokenFactory.generateToken(user);
         String refreshToken = jwtRefreshTokenFactory.generateToken(user);
 
+        log.info(String.format("User with email %s was successfully login.", user.getEmail()));
         return TokenDto.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken)
