@@ -32,7 +32,8 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handleException(BadCredentialsException exception) {
         Map<String, String> errors = new HashMap<>();
-        errors.put("errorMessage", "Given email or password is invalid!");
+        errors.put("message", "Given email or password is invalid!");
+        errors.put("error", exception.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
 }
