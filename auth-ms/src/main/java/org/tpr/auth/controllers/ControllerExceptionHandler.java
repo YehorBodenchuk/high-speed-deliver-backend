@@ -33,6 +33,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<Map<String, String>> handleException(BadCredentialsException exception) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", "Given email or password is invalid!");
+        errors.put("localizedError", exception.getLocalizedMessage());
         errors.put("error", exception.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
