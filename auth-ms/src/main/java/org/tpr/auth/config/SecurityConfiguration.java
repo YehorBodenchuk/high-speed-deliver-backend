@@ -29,7 +29,9 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
-                                .requestMatchers("/api/user/public/**").permitAll()
+                                .requestMatchers(
+                                        "/api/user/public/**"
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

@@ -2,12 +2,13 @@ package org.tpr.auth.services.impls;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tpr.auth.controllers.dtos.TokenDto;
-import org.tpr.auth.controllers.dtos.UserDto;
 import org.tpr.auth.controllers.dtos.UserRegisterDto;
 import org.tpr.auth.models.User;
 import org.tpr.auth.models.enums.UserRole;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenFactory jwtTokenFactory;
 
     private final JwtRefreshTokenFactory jwtRefreshTokenFactory;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -64,7 +66,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getMe() {
-        return null;
+    public TokenDto login(Authentication authentication) {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        User user = (User) authentication.getPrincipal();
+
+        log.info(String.format("User with email %s was successfully login.", user.getEmail()));
+
+        String token = jwtTokenFactory.generateToken(user);
+        String refreshToken = jwtRefreshTokenFactory.generateToken(user);
+
+        return TokenDto.builder()
+                .accessToken(token)
+                .refreshToken(refreshToken)
+                .accessTokenExpire(jwtTokenFactory.extractExpiration(token).getTime())
+                .refreshTokenExpire(jwtRefreshTokenFactory.extractExpiration(refreshToken).getTime())
+                .build();
     }
 }

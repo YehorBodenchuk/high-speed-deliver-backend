@@ -1,13 +1,13 @@
 package org.tpr.auth.services;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.tpr.auth.controllers.dtos.TokenDto;
-import org.tpr.auth.controllers.dtos.UserDto;
 import org.tpr.auth.controllers.dtos.UserRegisterDto;
 
 public interface UserService extends UserDetailsService {
 
     TokenDto register(UserRegisterDto request);
 
-    UserDto getMe();
+    TokenDto login(Authentication authentication);
 }
