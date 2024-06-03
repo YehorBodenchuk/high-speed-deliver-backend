@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.tpr.auth.controller.exceptions.UserNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,5 +37,13 @@ public class ControllerExceptionHandler {
         errors.put("localizedError", exception.getLocalizedMessage());
         errors.put("error", exception.getMessage());
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleException(UserNotFoundException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
     }
 }

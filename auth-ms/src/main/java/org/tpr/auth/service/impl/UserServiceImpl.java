@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tpr.auth.controller.dtos.*;
+import org.tpr.auth.controller.exceptions.UserNotFoundException;
 import org.tpr.auth.model.User;
 import org.tpr.auth.model.enums.UserRole;
 import org.tpr.auth.repositorie.UserRepository;
@@ -29,8 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //todo: Create own exception to handle
-        return userRepository.findByEmail(username).orElseThrow(RuntimeException::new);
+        return userRepository.findByEmail(username).orElseThrow(() -> {
+            log.error(String.format("User with email: %s not found!", username));
+            return new UserNotFoundException(username);
+        });
     }
 
     @Override
