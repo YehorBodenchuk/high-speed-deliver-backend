@@ -2,12 +2,16 @@ package org.tpr.auth.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.tpr.auth.controller.dtos.TokenDto;
-import org.tpr.auth.controller.dtos.UserRegisterDto;
+import org.tpr.auth.controller.dtos.*;
+import org.tpr.auth.model.User;
 
 public interface UserService extends UserDetailsService {
 
-    TokenDto register(UserRegisterDto request);
+    User register(UserRegisterDto request);
 
-    TokenDto login(Authentication authentication);
+    User login(Authentication authentication);
+
+    User delete(String email);
+
+    User update(String email, UserUpdateDto request);
 }

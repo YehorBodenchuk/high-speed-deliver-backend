@@ -1,6 +1,9 @@
 package org.tpr.auth.controller.dtos;
 
 import lombok.*;
+import org.tpr.auth.model.enums.UserRole;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +17,6 @@ public class UserDto {
     private String lastName;
 
     private String email;
+
+    private List<UserRole> roles;
 }

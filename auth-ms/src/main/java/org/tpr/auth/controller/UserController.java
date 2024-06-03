@@ -9,10 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.tpr.auth.controller.converters.UserDtoConverter;
-import org.tpr.auth.controller.dtos.TokenDto;
-import org.tpr.auth.controller.dtos.UserDto;
-import org.tpr.auth.controller.dtos.UserLoginDto;
-import org.tpr.auth.controller.dtos.UserRegisterDto;
+import org.tpr.auth.controller.dtos.*;
 import org.tpr.auth.model.User;
 import org.tpr.auth.service.facade.UserFacade;
 import org.tpr.auth.service.UserService;
@@ -30,13 +27,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/public/register")
-    public ResponseEntity<TokenDto> register(@Valid @RequestBody UserRegisterDto request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userFacade.registerAndNotify(request));
+    public ResponseEntity<UserWithTokenDto> register(@Valid @RequestBody UserRegisterDto request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userFacade.register(request));
     }
 
     @PostMapping("/public/login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody UserLoginDto request) {
-        return ResponseEntity.ok(userFacade.authenticateAndLogin(request));
+    public ResponseEntity<UserWithTokenDto> login(@Valid @RequestBody UserLoginDto request) {
+        return ResponseEntity.ok(userFacade.authenticate(request));
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -47,6 +44,18 @@ public class UserController {
                         (User) userService.loadUserByUsername(getPrincipal().getUsername())
                 )
         );
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("/me/update")
+    public ResponseEntity<UserWithTokenDto> updateMe(@Valid @RequestBody UserUpdateDto request) {
+        return ResponseEntity.ok(userFacade.update(getPrincipal().getEmail(), request));
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/me/delete")
+    public ResponseEntity<UserWithTokenDto> deleteMe() {
+        return ResponseEntity.ok(userFacade.delete(getPrincipal().getEmail()));
     }
 
     private User getPrincipal() {

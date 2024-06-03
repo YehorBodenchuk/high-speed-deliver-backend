@@ -12,6 +12,7 @@ public class UserDtoConverter {
                 .email(source.getEmail())
                 .firstName(source.getFirstName())
                 .lastName(source.getLastName())
+                .roles(source.getRoles())
                 .build();
     }
 }
