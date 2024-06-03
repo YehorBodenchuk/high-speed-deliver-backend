@@ -49,11 +49,6 @@ public class UserController {
         );
     }
 
-    @GetMapping("/some")
-    public String some() {
-        return "Aunticated!";
-    }
-
     private User getPrincipal() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
