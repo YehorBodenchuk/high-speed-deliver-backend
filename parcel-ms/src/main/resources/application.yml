@@ -1,9 +1,22 @@
 server:
   port: 8081
 
+jwt:
+  secret: "your_very_long_secret_key_that_is_at_least_32_bytes_long"
+
+rabbitmq:
+  exchange: rabbit_exchange
+  userInfoQueue: user_info
+  userInfoQueueKey: user_info_key
+
 spring:
   application:
     name: parcel-microservice
   data:
     mongodb:
       uri: mongodb://admin:Pa55w0rd@localhost:27017/parcels?authSource=admin
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: Pa55w0rd

@@ -6,7 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.tpr.auth.controller.converters.UserDtoConverter;
+import org.tpr.auth.controller.converters.impl.UserDtoConverter;
 import org.tpr.auth.controller.dtos.*;
 import org.tpr.auth.model.User;
 import org.tpr.auth.service.facade.UserFacade;

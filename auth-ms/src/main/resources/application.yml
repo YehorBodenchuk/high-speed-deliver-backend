@@ -12,6 +12,8 @@ rabbitmq:
   registrationQueueKey: registration_key
   parcelQueue: parcel_queue
   parcelQueueKey: parcel_key
+  userInfoQueue: user_info
+  userInfoQueueKey: user_info_key
 
 spring:
   application:

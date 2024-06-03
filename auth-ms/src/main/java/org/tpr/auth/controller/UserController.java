@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.tpr.auth.controller.converters.UserDtoConverter;
+import org.tpr.auth.controller.converters.impl.UserDtoConverter;
 import org.tpr.auth.controller.dtos.*;
 import org.tpr.auth.model.User;
 import org.tpr.auth.service.facade.UserFacade;

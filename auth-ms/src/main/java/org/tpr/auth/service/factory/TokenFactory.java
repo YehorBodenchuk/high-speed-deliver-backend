@@ -25,7 +25,7 @@ public interface TokenFactory {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    };
+    }
 
     default String createToken(Map<String, Object> claims, String subject, long expirationTime, SecretKey secret) {
         return Jwts.builder()

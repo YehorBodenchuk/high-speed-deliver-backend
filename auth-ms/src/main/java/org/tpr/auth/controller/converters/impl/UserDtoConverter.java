@@ -1,4 +1,4 @@
-package org.tpr.auth.controller.converters;
+package org.tpr.auth.controller.converters.impl;
 
 import org.springframework.stereotype.Component;
 import org.tpr.auth.controller.dtos.UserDto;
