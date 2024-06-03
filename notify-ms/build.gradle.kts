@@ -11,17 +11,26 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.jwt.api)
-    runtimeOnly(libs.jwt.impl)
-    runtimeOnly(libs.jwt.jackson)
+    // Spring Boot dependencies
     implementation(libs.spring.validation)
     implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot)
     implementation(libs.spring.security)
     implementation(libs.spring.actuator)
     implementation(libs.spring.mongodb)
+    implementation(libs.spring.rabbitmq)
+    implementation(libs.spring.mail)
+
+    // JWT libs
+    implementation(libs.jwt.api)
+    runtimeOnly(libs.jwt.impl)
+    runtimeOnly(libs.jwt.jackson)
+
+    // Lombok
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+
+    // Testing
     testImplementation(libs.spring.test)
     testImplementation(libs.test.junit)
     testImplementation(libs.test.junit.api)
