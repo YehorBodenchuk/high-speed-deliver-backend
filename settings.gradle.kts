@@ -14,7 +14,10 @@ dependencyResolutionManagement {
             version("mockito", "5.12.0")
             version("crypto", "6.3.0")
             version("jwt", "0.12.5")
+            version("jackson", "2.17.1")
 
+            library("jackson", "com.fasterxml.jackson.core", "jackson-databind").versionRef("jackson")
+            library("spring-thymeleaf", "org.springframework.boot", "spring-boot-starter-thymeleaf").versionRef("spring")
             library("spring-mail", "org.springframework.boot", "spring-boot-starter-mail").versionRef("spring")
             library("spring-rabbitmq", "org.springframework.boot", "spring-boot-starter-amqp").versionRef("spring")
             library("jwt-api", "io.jsonwebtoken", "jjwt-api").versionRef("jwt")

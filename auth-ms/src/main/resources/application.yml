@@ -10,6 +10,8 @@ rabbitmq:
   exchange: rabbit_exchange
   registrationQueue: registration_queue
   registrationQueueKey: registration_key
+  parcelQueue: parcel_queue
+  parcelQueueKey: parcel_key
 
 spring:
   application:

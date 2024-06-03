@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
-import org.tpr.auth.models.User;
+import org.tpr.auth.model.User;
 
 @Configuration
 @RequiredArgsConstructor

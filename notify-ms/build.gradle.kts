@@ -15,11 +15,11 @@ dependencies {
     implementation(libs.spring.validation)
     implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot)
-    implementation(libs.spring.security)
     implementation(libs.spring.actuator)
     implementation(libs.spring.mongodb)
     implementation(libs.spring.rabbitmq)
     implementation(libs.spring.mail)
+    implementation(libs.spring.thymeleaf)
 
     // JWT libs
     implementation(libs.jwt.api)

@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.tpr.auth.utils.JwtAuthenticationFilter;
+import org.tpr.auth.config.filter.JwtAuthenticationFilter;
 
 import java.util.List;
 
