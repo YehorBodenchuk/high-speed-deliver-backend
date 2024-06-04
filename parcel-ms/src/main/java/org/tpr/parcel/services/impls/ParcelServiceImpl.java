@@ -7,6 +7,7 @@ import org.tpr.parcel.controllers.enums.ParcelError;
 import org.tpr.parcel.controllers.exceptions.ParcelAlreadyDeletedException;
 import org.tpr.parcel.controllers.exceptions.ParcelNotFoundException;
 import org.tpr.parcel.modals.Parcel;
+import org.tpr.parcel.modals.PersonInfo;
 import org.tpr.parcel.modals.dtos.CreateParcelDto;
 import org.tpr.parcel.modals.enums.ParcelStatus;
 import org.tpr.parcel.repositories.ParcelRepository;
@@ -43,16 +44,28 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public Parcel createParcel(CreateParcelDto createParcelDto) {
         log.info(String.format("Creating parcel to transit to: %s", createParcelDto.getDestination().getCountry()));
+
+        PersonInfo sender = PersonInfo.builder()
+                .email(createParcelDto.getSenderEmail())
+                .phone(createParcelDto.getSenderPhone())
+                .build();
+
+        PersonInfo recipient = PersonInfo.builder()
+                .email(createParcelDto.getRecipientEmail())
+                .phone(createParcelDto.getRecipientPhone())
+                .build();
+
         Parcel parcel = Parcel.builder()
                 .mark(createParcelDto.getMark())
                 .createDate(new Date())
-                .sender(createParcelDto.getSender())
+                .sender(sender)
                 .status(ParcelStatus.CREATED)
-                .recipient(createParcelDto.getRecipient())
+                .recipient(recipient)
                 .weight(createParcelDto.getWeight())
                 .postIndex(createParcelDto.getPostIndex())
                 .destination(createParcelDto.getDestination())
                 .build();
+
         return parcelRepository.save(parcel);
     }
 
@@ -75,5 +88,11 @@ public class ParcelServiceImpl implements ParcelService {
         parcel.setArchiveDate(new Date());
 
         return parcelRepository.save(parcel);
+    }
+
+    @Override
+    public List<Parcel> getAllParcelsByRecipientEmailOrPhone(String email, String phone) {
+        log.info(String.format("Loading all parcels for user with email: %s and phone: %s", email, phone));
+        return parcelRepository.findByRecipientEmailOrPhone(email, phone);
     }
 }

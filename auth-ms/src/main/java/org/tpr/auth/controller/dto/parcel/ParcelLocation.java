@@ -1,13 +1,11 @@
-package org.tpr.parcel.modals.utils;
+package org.tpr.auth.controller.dto.parcel;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Location {
+public class ParcelLocation {
 
     private String city;
 

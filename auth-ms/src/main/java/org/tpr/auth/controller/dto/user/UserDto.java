@@ -1,4 +1,4 @@
-package org.tpr.auth.controller.dtos;
+package org.tpr.auth.controller.dto.user;
 
 import lombok.*;
 import org.tpr.auth.model.enums.UserRole;

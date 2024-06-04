@@ -4,9 +4,10 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.tpr.parcel.modals.enums.ParcelMark;
 import org.tpr.parcel.modals.enums.ParcelStatus;
-import org.tpr.parcel.modals.utils.Location;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Document
 @Getter
@@ -18,9 +19,9 @@ public class Parcel {
 
     private String id;
 
-    private String sender;
+    private PersonInfo sender;
 
-    private String recipient;
+    private PersonInfo recipient;
 
     private ParcelStatus status;
 
@@ -39,4 +40,6 @@ public class Parcel {
     private Date archiveDate;
 
     private Location destination;
+
+    private List<ParcelHistory> history = new ArrayList<>();
 }

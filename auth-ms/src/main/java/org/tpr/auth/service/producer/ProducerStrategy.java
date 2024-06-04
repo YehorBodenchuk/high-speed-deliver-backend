@@ -1,6 +1,7 @@
 package org.tpr.auth.service.producer;
 
-public interface ProducerStrategy {
+@FunctionalInterface
+public interface ProducerStrategy<T, R> {
 
-    void sendMessage(Object message);
+    T sendMessage(R message);
 }

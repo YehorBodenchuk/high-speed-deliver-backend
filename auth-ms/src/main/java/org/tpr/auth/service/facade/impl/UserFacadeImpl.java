@@ -7,13 +7,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.tpr.auth.controller.converters.impl.UserDtoConverter;
-import org.tpr.auth.controller.dtos.*;
+import org.tpr.auth.controller.dto.parcel.ParcelDto;
+import org.tpr.auth.controller.dto.rabbitmq.QueueParcelDto;
+import org.tpr.auth.controller.dto.rabbitmq.QueueRegistrationDto;
+import org.tpr.auth.controller.dto.user.*;
 import org.tpr.auth.model.User;
 import org.tpr.auth.service.facade.UserFacade;
 import org.tpr.auth.service.UserService;
 import org.tpr.auth.service.factory.impl.JwtRefreshTokenFactory;
 import org.tpr.auth.service.factory.impl.JwtTokenFactory;
+import org.tpr.auth.service.producer.impl.ParcelProducer;
 import org.tpr.auth.service.producer.impl.RegistrationProducer;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +37,8 @@ public class UserFacadeImpl implements UserFacade {
     private final JwtRefreshTokenFactory jwtRefreshTokenFactory;
 
     private final UserDtoConverter userDtoConverter;
+
+    private final ParcelProducer parcelProducer;
 
     @Override
     public UserWithTokenDto register(UserRegisterDto request) {
@@ -86,6 +94,19 @@ public class UserFacadeImpl implements UserFacade {
                 .user(userDtoConverter.convertToUserDto(user))
                 .tokens(generateAllTokens(user))
                 .build();
+    }
+
+    @Override
+    public List<ParcelDto> getUserParcels(String email) {
+        log.info(String.format("Loading user with email: %s", email));
+        User user = (User) userService.loadUserByUsername(email);
+
+        QueueParcelDto request = QueueParcelDto.builder()
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .build();
+
+        return parcelProducer.sendMessage(request);
     }
 
     private TokenDto generateAllTokens(User user) {

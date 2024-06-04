@@ -17,4 +17,6 @@ public interface ParcelService {
     Parcel updateParcelStatus(ParcelStatus parcelStatus, String id);
 
     Parcel deleteParcel(String id);
+
+    List<Parcel> getAllParcelsByRecipientEmailOrPhone(String email, String phone);
 }

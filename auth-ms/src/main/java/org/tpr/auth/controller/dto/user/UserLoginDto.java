@@ -1,4 +1,4 @@
-package org.tpr.auth.controller.dtos;
+package org.tpr.auth.controller.dto.user;
 
 import jakarta.validation.constraints.Email;
 import lombok.Getter;

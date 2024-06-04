@@ -6,8 +6,12 @@ jwt:
 
 rabbitmq:
   exchange: rabbit_exchange
-  userInfoQueue: user_info
-  userInfoQueueKey: user_info_key
+  produce:
+    updateParcel:
+      queue: update_parcel_queue
+      key: update_parcel_queue_key
+  consume:
+    parcelQueue: parcel_queue
 
 spring:
   application:

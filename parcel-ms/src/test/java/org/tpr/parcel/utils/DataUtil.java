@@ -4,7 +4,7 @@ import org.tpr.parcel.modals.Parcel;
 import org.tpr.parcel.modals.dtos.CreateParcelDto;
 import org.tpr.parcel.modals.enums.ParcelMark;
 import org.tpr.parcel.modals.enums.ParcelStatus;
-import org.tpr.parcel.modals.utils.Location;
+import org.tpr.parcel.modals.Location;
 
 import java.util.Date;
 

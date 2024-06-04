@@ -24,6 +24,17 @@ public class RabbitMQConfiguration {
     @Value("${rabbitmq.registrationQueueKey}")
     private String registrationKey;
 
+    @Value("${rabbitmq.parcelQueue}")
+    private String parcelQueue;
+
+    @Value("${rabbitmq.parcelQueueKey}")
+    private String parcelKey;
+
+    @Bean
+    public Queue parcelQueue() {
+        return new Queue(parcelQueue);
+    }
+
     @Bean
     public Queue registrationQueue() {
         return new Queue(registrationQueue);
@@ -37,6 +48,11 @@ public class RabbitMQConfiguration {
     @Bean
     public Binding registrationQueueBinding() {
         return BindingBuilder.bind(registrationQueue()).to(exchange()).with(registrationKey);
+    }
+
+    @Bean
+    public Binding parcelQueueBinding() {
+        return BindingBuilder.bind(parcelQueue()).to(exchange()).with(parcelKey);
     }
 
     @Bean

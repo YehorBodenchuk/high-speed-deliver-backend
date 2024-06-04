@@ -9,10 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.tpr.auth.controller.converters.impl.UserDtoConverter;
-import org.tpr.auth.controller.dtos.*;
+import org.tpr.auth.controller.dto.parcel.ParcelDto;
+import org.tpr.auth.controller.dto.user.*;
 import org.tpr.auth.model.User;
 import org.tpr.auth.service.facade.UserFacade;
 import org.tpr.auth.service.UserService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/user")
@@ -56,6 +59,12 @@ public class UserController {
     @DeleteMapping("/me/delete")
     public ResponseEntity<UserWithTokenDto> deleteMe() {
         return ResponseEntity.ok(userFacade.delete(getPrincipal().getEmail()));
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/my/parcels")
+    public ResponseEntity<Collection<ParcelDto>> myParcels() {
+        return ResponseEntity.ok(userFacade.getUserParcels(getPrincipal().getEmail()));
     }
 
     private User getPrincipal() {

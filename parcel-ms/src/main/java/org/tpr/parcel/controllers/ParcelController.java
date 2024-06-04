@@ -3,6 +3,7 @@ package org.tpr.parcel.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.tpr.parcel.modals.Parcel;
 import org.tpr.parcel.modals.dtos.CreateParcelDto;
@@ -28,6 +29,7 @@ public class ParcelController {
         return ResponseEntity.ok(parcelService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Parcel> create(@RequestBody CreateParcelDto createParcelDto) {
         return ResponseEntity.ok(parcelService.createParcel(createParcelDto));

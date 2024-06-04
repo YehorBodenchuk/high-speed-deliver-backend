@@ -1,5 +1,6 @@
 package org.tpr.parcel.config.filter;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,11 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.tpr.parcel.controllers.dto.UserConsumerDto;
-import org.tpr.parcel.services.producer.impl.UserInfoProducerImpl;
 import org.tpr.parcel.util.JwtUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final UserInfoProducerImpl userInfoProducer;
 
     private final JwtUtil jwtUtil;
 
@@ -38,23 +37,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
 
         String username = null;
+        List<String> roles = new ArrayList<>();
         String jwt = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
+                roles = jwtUtil.extractRoles(jwt);
             } catch (SecurityException e) {
                 throw new RuntimeException();
             }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserConsumerDto userDetails = userInfoProducer.sendMessage(username);
+            Claims claims = jwtUtil.extractAllClaims(jwt);
+            UserPrincipals userDetails = UserPrincipals.builder()
+                    .email(username)
+                    .roles(roles)
+                    .firstName(claims.get("firstName", String.class))
+                    .lastName(claims.get("lastName", String.class))
+                    .build();
 
             if (!jwtUtil.isTokenExpired(jwt)) {
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, getAuthorities(userDetails.getRoles()));
+                        new UsernamePasswordAuthenticationToken(userDetails, null, getAuthorities(roles));
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

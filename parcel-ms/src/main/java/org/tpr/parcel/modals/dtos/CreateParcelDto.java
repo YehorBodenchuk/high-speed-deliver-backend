@@ -2,7 +2,7 @@ package org.tpr.parcel.modals.dtos;
 
 import lombok.*;
 import org.tpr.parcel.modals.enums.ParcelMark;
-import org.tpr.parcel.modals.utils.Location;
+import org.tpr.parcel.modals.Location;
 
 @Getter
 @Setter
@@ -17,9 +17,13 @@ public class CreateParcelDto {
 
     private ParcelMark mark;
 
-    private String sender;
+    private String senderEmail;
 
-    private String recipient;
+    private String senderPhone;
+
+    private String recipientEmail;
+
+    private String recipientPhone;
 
     private Location destination;
 }

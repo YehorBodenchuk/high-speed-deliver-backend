@@ -1,4 +1,4 @@
-package org.tpr.auth.controller.dtos;
+package org.tpr.auth.controller.dto.rabbitmq;
 
 import lombok.*;
 
@@ -7,9 +7,9 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class QueueRegistrationDto {
+public class QueueParcelDto {
 
     private String email;
 
-    private String firstName;
+    private String phone;
 }

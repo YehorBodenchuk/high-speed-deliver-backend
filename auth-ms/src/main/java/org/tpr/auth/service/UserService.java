@@ -2,7 +2,8 @@ package org.tpr.auth.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.tpr.auth.controller.dtos.*;
+import org.tpr.auth.controller.dto.user.UserRegisterDto;
+import org.tpr.auth.controller.dto.user.UserUpdateDto;
 import org.tpr.auth.model.User;
 
 public interface UserService extends UserDetailsService {

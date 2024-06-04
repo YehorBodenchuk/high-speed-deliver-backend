@@ -1,4 +1,4 @@
-package org.tpr.auth.controller.exceptions;
+package org.tpr.auth.controller.exception;
 
 public class UserNotFoundException extends RuntimeException {
 
