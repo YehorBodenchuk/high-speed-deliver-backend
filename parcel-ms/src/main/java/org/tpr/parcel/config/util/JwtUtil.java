@@ -1,4 +1,4 @@
-package org.tpr.parcel.util;
+package org.tpr.parcel.config.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

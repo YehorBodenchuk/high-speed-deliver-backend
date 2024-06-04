@@ -3,10 +3,12 @@ package org.tpr.parcel.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.tpr.parcel.controller.dto.UpdateParcelDto;
 import org.tpr.parcel.controller.enums.ParcelError;
 import org.tpr.parcel.controller.exception.ParcelAlreadyDeletedException;
 import org.tpr.parcel.controller.exception.ParcelNotFoundException;
 import org.tpr.parcel.modal.Parcel;
+import org.tpr.parcel.modal.ParcelHistory;
 import org.tpr.parcel.modal.PersonInfo;
 import org.tpr.parcel.controller.dto.CreateParcelDto;
 import org.tpr.parcel.modal.enums.ParcelStatus;
@@ -55,6 +57,10 @@ public class ParcelServiceImpl implements ParcelService {
                 .phone(createParcelDto.getRecipientPhone())
                 .build();
 
+        ParcelHistory history = ParcelHistory.builder()
+                .status(ParcelStatus.CREATED)
+                .build();
+
         Parcel parcel = Parcel.builder()
                 .mark(createParcelDto.getMark())
                 .createDate(new Date())
@@ -64,6 +70,7 @@ public class ParcelServiceImpl implements ParcelService {
                 .weight(createParcelDto.getWeight())
                 .postIndex(createParcelDto.getPostIndex())
                 .destination(createParcelDto.getDestination())
+                .history(List.of(history))
                 .build();
 
         return parcelRepository.save(parcel);
@@ -73,6 +80,23 @@ public class ParcelServiceImpl implements ParcelService {
     public Parcel updateParcelStatus(ParcelStatus parcelStatus, String id) {
         Parcel parcel = getById(id);
         parcel.setStatus(parcelStatus);
+        return parcelRepository.save(parcel);
+    }
+
+    @Override
+    public Parcel update(UpdateParcelDto request, String id) {
+        log.info(String.format("Updating parcel with id: %s", id));
+        Parcel parcel = getById(id);
+
+        ParcelHistory history = ParcelHistory.builder()
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .status(request.getStatus())
+                .build();
+
+        parcel.getHistory().add(history);
+        parcel.setStatus(request.getStatus());
+
         return parcelRepository.save(parcel);
     }
 
