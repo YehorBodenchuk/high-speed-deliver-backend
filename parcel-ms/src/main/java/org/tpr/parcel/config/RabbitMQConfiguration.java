@@ -18,15 +18,15 @@ public class RabbitMQConfiguration {
     @Value("${rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${rabbitmq.userInfoQueue}")
-    private String userInfo;
+    @Value("${rabbitmq.produce.updateParcel.queue}")
+    private String updateParcelQueue;
 
-    @Value("${rabbitmq.userInfoQueueKey}")
-    private String userInfoKey;
+    @Value("${rabbitmq.produce.updateParcel.key}")
+    private String updateParcelQueueKey;
 
     @Bean
-    public Queue userInfoQueue() {
-        return new Queue(userInfo);
+    public Queue updateParcelQueue() {
+        return new Queue(updateParcelQueue);
     }
 
     @Bean
@@ -35,9 +35,10 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Binding userInfoQueueBinding() {
-        return BindingBuilder.bind(userInfoQueue()).to(exchange()).with(userInfoKey);
+    public Binding updateParcelQueueBinding() {
+        return BindingBuilder.bind(updateParcelQueue()).to(exchange()).with(updateParcelQueueKey);
     }
+
 
     @Bean
     public MessageConverter messageConverter() {
