@@ -6,7 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.tpr.auth.controller.converters.impl.UserDtoConverter;
+import org.tpr.auth.controller.converter.impl.UserDtoConverter;
 import org.tpr.auth.controller.dto.parcel.ParcelDto;
 import org.tpr.auth.controller.dto.rabbitmq.QueueParcelDto;
 import org.tpr.auth.controller.dto.rabbitmq.QueueRegistrationDto;

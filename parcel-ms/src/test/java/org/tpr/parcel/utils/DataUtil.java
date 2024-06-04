@@ -1,10 +1,10 @@
 package org.tpr.parcel.utils;
 
-import org.tpr.parcel.modals.Parcel;
-import org.tpr.parcel.modals.dtos.CreateParcelDto;
-import org.tpr.parcel.modals.enums.ParcelMark;
-import org.tpr.parcel.modals.enums.ParcelStatus;
-import org.tpr.parcel.modals.Location;
+import org.tpr.parcel.modal.Parcel;
+import org.tpr.parcel.controller.dto.CreateParcelDto;
+import org.tpr.parcel.modal.enums.ParcelMark;
+import org.tpr.parcel.modal.enums.ParcelStatus;
+import org.tpr.parcel.modal.Location;
 
 import java.util.Date;
 
