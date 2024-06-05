@@ -1,4 +1,4 @@
-package org.tpr.auth.service.impl;
+package org.tpr.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +13,7 @@ import org.tpr.auth.controller.dto.user.UserUpdateDto;
 import org.tpr.auth.controller.exception.UserNotFoundException;
 import org.tpr.auth.model.User;
 import org.tpr.auth.model.enums.UserRole;
-import org.tpr.auth.repositorie.UserRepository;
-import org.tpr.auth.service.UserService;
+import org.tpr.auth.repository.UserRepository;
 
 import java.util.Date;
 import java.util.List;

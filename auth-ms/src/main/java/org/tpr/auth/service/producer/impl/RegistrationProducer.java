@@ -24,14 +24,4 @@ public class RegistrationProducer implements ProducerStrategy<Void, QueueRegistr
         rabbitTemplate.convertAndSend(exchange, key, message);
         return null;
     }
-
-//    @Override
-//    public void sendMessage(Object message) {
-//        rabbitTemplate.convertAndSend(exchange, key, message);
-//    }
-//
-//    @Override
-//    public T sendMessage(String message) {
-//        return null;
-//    }
 }

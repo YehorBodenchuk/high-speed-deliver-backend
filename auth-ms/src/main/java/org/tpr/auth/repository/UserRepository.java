@@ -1,4 +1,4 @@
-package org.tpr.auth.repositorie;
+package org.tpr.auth.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.tpr.auth.model.User;

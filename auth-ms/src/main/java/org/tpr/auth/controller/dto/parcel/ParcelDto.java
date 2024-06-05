@@ -1,11 +1,13 @@
 package org.tpr.auth.controller.dto.parcel;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class ParcelDto {

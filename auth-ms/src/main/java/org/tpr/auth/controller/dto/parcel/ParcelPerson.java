@@ -1,8 +1,10 @@
 package org.tpr.auth.controller.dto.parcel;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class ParcelPerson {
